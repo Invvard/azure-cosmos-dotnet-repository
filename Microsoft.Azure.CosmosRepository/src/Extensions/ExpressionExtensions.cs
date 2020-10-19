@@ -12,14 +12,14 @@ namespace Microsoft.Azure.CosmosRepository.Extensions
     /// Borrowed from:
     /// https://docs.microsoft.com/en-us/archive/blogs/meek/linq-to-entities-combining-predicates
     /// </summary>
-    internal static class ExpressionExtensions
+    static class ExpressionExtensions
     {
         internal static Expression<T> Compose<T>(
             this Expression<T> first,
             Expression<T> second,
             Func<Expression, Expression, Expression> merge)
         {
-            Dictionary<ParameterExpression, ParameterExpression> map =
+            IDictionary<ParameterExpression, ParameterExpression> map =
                 first.Parameters
                     .Select((parameter, index) => (parameter, second: second.Parameters[index]))
                     .ToDictionary(p => p.second, p => p.parameter);
@@ -41,29 +41,5 @@ namespace Microsoft.Azure.CosmosRepository.Extensions
         internal static Expression<Func<T, bool>> Or<T>(
             this Expression<Func<T, bool>> first,
             Expression<Func<T, bool>> second) => first.Compose(second, Expression.Or);
-    }
-
-    internal class ParameterRebinder : ExpressionVisitor
-    {
-        readonly Dictionary<ParameterExpression, ParameterExpression> _map;
-
-        internal ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map) =>
-            _map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
-
-        internal static Expression ReplaceParameters(
-            Dictionary<ParameterExpression, ParameterExpression> map, Expression exp) =>
-            new ParameterRebinder(map).Visit(exp);
-
-        /// <inheritdoc />
-        protected override Expression VisitParameter(ParameterExpression parameter)
-        {
-            if (_map.TryGetValue(parameter, out ParameterExpression replacement))
-            {
-                parameter = replacement;
-            }
-
-            return base.VisitParameter(parameter);
-        }
-
     }
 }

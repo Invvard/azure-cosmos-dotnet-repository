@@ -10,14 +10,14 @@ namespace ServiceTier
 {
     public interface IExampleService
     {
-        ValueTask<Person> AddPersonAsync(Person person);
-        ValueTask<IEnumerable<Person>> AddPeopleAsync(IEnumerable<Person> people);
+        Task<Person> AddPersonAsync(Person person);
+        Task<IEnumerable<Person>> AddPeopleAsync(IEnumerable<Person> people);
 
-        ValueTask<Person> ReadPersonByIdAsync(string id, string partitionKey);
-        ValueTask<IEnumerable<Person>> ReadPeopleAsync(Expression<Func<Person, bool>> matches);
+        Task<Person> ReadPersonByIdAsync(string id, string partitionKey);
+        Task<IEnumerable<Person>> ReadPeopleAsync(Expression<Func<Person, bool>> matches);
 
-        ValueTask<Person> UpdatePersonAsync(Person person);
+        Task<Person> UpdatePersonAsync(Person person);
 
-        ValueTask DeletePersonAsync(Person person);
+        Task DeletePersonAsync(Person person);
     }
 }

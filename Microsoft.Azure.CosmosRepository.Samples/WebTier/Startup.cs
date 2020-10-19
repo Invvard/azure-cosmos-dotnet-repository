@@ -12,7 +12,7 @@ namespace WebTier
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration) => _configuration = configuration;
 
@@ -28,7 +28,7 @@ namespace WebTier
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Beer - Web API",
+                    Title = "Language - Web API",
                     Version = "v1"
                 });
             });
@@ -40,7 +40,7 @@ namespace WebTier
             app.UseSwagger();
             app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Beer - Web API");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Language - Web API");
                 });
 
             app.UseHttpsRedirection();

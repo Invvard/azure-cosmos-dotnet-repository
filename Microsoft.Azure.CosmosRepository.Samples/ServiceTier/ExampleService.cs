@@ -16,22 +16,22 @@ namespace ServiceTier
         public ExampleService(IRepository<Person> personRepository) =>
             _personRepository = personRepository;
 
-        public ValueTask<IEnumerable<Person>> AddPeopleAsync(IEnumerable<Person> people) =>
+        public Task<IEnumerable<Person>> AddPeopleAsync(IEnumerable<Person> people) =>
             _personRepository.CreateAsync(people);
 
-        public ValueTask<Person> AddPersonAsync(Person person) =>
+        public Task<Person> AddPersonAsync(Person person) =>
             _personRepository.CreateAsync(person);
 
-        public ValueTask DeletePersonAsync(Person person) =>
+        public Task DeletePersonAsync(Person person) =>
             _personRepository.DeleteAsync(person);
 
-        public ValueTask<IEnumerable<Person>> ReadPeopleAsync(Expression<Func<Person, bool>> matches) =>
+        public Task<IEnumerable<Person>> ReadPeopleAsync(Expression<Func<Person, bool>> matches) =>
             _personRepository.GetAsync(matches);
 
-        public ValueTask<Person> ReadPersonByIdAsync(string id, string partitionKey) =>
+        public Task<Person> ReadPersonByIdAsync(string id, string partitionKey) =>
             _personRepository.GetAsync(id, partitionKey);
 
-        public ValueTask<Person> UpdatePersonAsync(Person person) =>
+        public Task<Person> UpdatePersonAsync(Person person) =>
             _personRepository.UpdateAsync(person);
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 namespace Microsoft.Azure.CosmosRepository.Providers
 {
     /// <inheritdoc/>
-    internal class DefaultCosmosClientProvider : ICosmosClientProvider, IDisposable
+    class DefaultCosmosClientProvider : ICosmosClientProvider, IDisposable
     {
         readonly Lazy<CosmosClient> _lazyCosmosClient;
         readonly CosmosClientOptions _cosmosClientOptions;

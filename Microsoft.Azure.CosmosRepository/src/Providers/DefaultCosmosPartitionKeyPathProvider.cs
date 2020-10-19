@@ -8,7 +8,7 @@ using Microsoft.Azure.CosmosRepository.Attributes;
 namespace Microsoft.Azure.CosmosRepository.Providers
 {
     /// <inheritdoc />
-    internal class DefaultCosmosPartitionKeyPathProvider :
+    class DefaultCosmosPartitionKeyPathProvider :
         ICosmosPartitionKeyPathProvider
     {
         static readonly Type _partitionKeyNameAttributeType = typeof(PartitionKeyPathAttribute);

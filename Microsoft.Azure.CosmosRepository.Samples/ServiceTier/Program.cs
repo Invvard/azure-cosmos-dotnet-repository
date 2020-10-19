@@ -20,9 +20,13 @@ namespace ServiceTier
             using IHost host = CreateHostBuilder(args).Build();
             await host.StartAsync();
 
+            // Demonstrate using the factory...
+            IRepositoryFactory factory =
+                host.Services.GetService<IRepositoryFactory>();
+
             // Demonstrate raw repo usage...
             await Task.WhenAll(
-                RawRepositoryExampleAsync(host.Services.GetService<IRepository<Person>>()),
+                RawRepositoryExampleAsync(factory.RepositoryOf<Person>()),
                 RawRepositoryExampleAsync(host.Services.GetService<IRepository<Widget>>()));
 
             // Demonstrate service wrapper around repo usage...
@@ -92,8 +96,8 @@ namespace ServiceTier
             Console.WriteLine("[Person] Repository deleting...");
             await Task.WhenAll(new[]
             {
-                repository.DeleteAsync(mary.Id, mary.SyntheticPartitionKey).AsTask(),
-                repository.DeleteAsync(calvin.Id, calvin.SyntheticPartitionKey).AsTask()
+                repository.DeleteAsync(mary.Id, mary.SyntheticPartitionKey),
+                repository.DeleteAsync(calvin.Id, calvin.SyntheticPartitionKey)
             });
         }
 
@@ -140,8 +144,8 @@ namespace ServiceTier
             Console.WriteLine("[Widget] Repository deleting...");
             await Task.WhenAll(new[]
             {
-                repository.DeleteAsync(contraption.Id).AsTask(),
-                repository.DeleteAsync(telescope.Id).AsTask()
+                repository.DeleteAsync(contraption.Id),
+                repository.DeleteAsync(telescope.Id)
             });
         }
 
@@ -190,8 +194,8 @@ namespace ServiceTier
             Console.WriteLine("[Person] Service deleting...");
             await Task.WhenAll(new[]
             {
-                service.DeletePersonAsync(james).AsTask(),
-                service.DeletePersonAsync(adele).AsTask()
+                service.DeletePersonAsync(james),
+                service.DeletePersonAsync(adele)
             });
         }
     }
